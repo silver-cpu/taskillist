@@ -243,12 +243,6 @@ It demonstrates:
 
 ---
 
-## 📄 License
-
-MIT License (or specify your own)
-
----
-
 ## 🙌 Author
 
 **Matteen Mahfooz**
