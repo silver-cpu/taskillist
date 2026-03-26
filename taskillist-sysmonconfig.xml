@@ -1,0 +1,58 @@
+<Sysmon schemaversion="4.90">
+  <EventFiltering>
+    <!-- Event ID 1: Process Creation -->
+    <RuleGroup name="Detect TaskKill" groupRelation="or">
+      <ProcessCreate onmatch="include">
+        <Rule groupRelation="and">
+          <Image condition="end with">taskillist.exe</Image>
+          <CommandLine condition="contains any">/kill;/t;/f;/s;/u;/p;/pid;/im</CommandLine>
+        </Rule>
+      </ProcessCreate>
+    </RuleGroup>
+
+    <RuleGroup name="Detect Tasklist" groupRelation="or">
+      <ProcessCreate onmatch="include">
+        <Rule groupRelation="and">
+          <Image condition="end with">taskillist.exe</Image>
+          <CommandLine condition="contains any">/v;/svc;</CommandLine>
+        </Rule>
+      </ProcessCreate>
+    </RuleGroup>
+
+    <!-- Event ID 3: Network Connection -->
+    <RuleGroup name="Network Connection" groupRelation="or">
+      <NetworkConnect onmatch="include">
+        <Rule groupRelation="and">
+          <Image condition="end with">taskillist.exe</Image>
+          <DestinationPort condition="is">25145</DestinationPort>
+        </Rule>
+      </NetworkConnect>
+    </RuleGroup>
+
+    <!-- Event ID 5: Process Terminated (Catch All) -->
+    <RuleGroup name="Termination Logging" groupRelation="or">
+      <ProcessTerminate onmatch="exclude">
+        <!-- Leave empty to catch every process termination on the system -->
+      </ProcessTerminate>
+    </RuleGroup>
+
+    <!-- Event ID 10: Process Access -->
+    <RuleGroup name="TaskKill Access Traces" groupRelation="or">
+      <ProcessAccess onmatch="include">
+        <!-- Rule 1: Querying to Kill (via Winstation/WTS) -->
+        <Rule groupRelation="and">
+          <SourceImage condition="end with">taskillist.exe</SourceImage>
+          <GrantedAccess condition="is">0x1000</GrantedAccess>
+          <CallTrace condition="contains any">winsta.dll;wtsapi32.dll</CallTrace>
+        </Rule>
+        <!-- Rule 2: Enumerating to Search (Standard DLLs) -->
+        <Rule groupRelation="and">
+          <SourceImage condition="end with">taskillist.exe</SourceImage>
+          <GrantedAccess condition="is">0x1000</GrantedAccess>
+          <CallTrace condition="contains any">ntdll.dll;kernelbase.dll;kernel32.dll</CallTrace>
+        </Rule>
+      </ProcessAccess>
+    </RuleGroup>
+
+  </EventFiltering>
+</Sysmon>
