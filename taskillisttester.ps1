@@ -1,14 +1,13 @@
 ﻿# ==============================================================================
-# TASKILLIST FULL AUTOMATED TEST SUITE (STABILIZED & HARDENED)
-# This version uses MSPaint for stable PID tracking and includes cleanup.
+# TASKILLIST FULL AUTOMATED TEST SUITE
 # ==============================================================================
 
 # --- 0. PATHS ---
 #$exe = "C:\Windows\System32\tasklist.exe"
 #$exe2 = "C:\Windows\System32\taskkill.exe"
 # UNCOMMENT the line below to test your custom build:
-$exe = "$env:USERPROFILE\source\repos\taskillist\x64\Release\taskillist.exe"
-
+#$exe = "$env:USERPROFILE\source\repos\taskillist\x64\Release\taskillist.exe"
+$exe = ".\taskillist.exe"
 function Run-Test($Name, $Command) {
     Write-Host "`n[TEST] $Name" -ForegroundColor Cyan
     Write-Host "Running: $Command" -ForegroundColor Gray
@@ -30,9 +29,9 @@ $targetPID  = Start-Process notepad.exe -WindowStyle Minimized -PassThru
 #$targetS2    = Start-Process mspaint.exe -WindowStyle Minimized -PassThru 
 $targetTree = Start-Process cmd.exe     -ArgumentList "/c mspaint.exe" -PassThru -WindowStyle Minimized
 $allPIDs    = @($targetIM.Id, $targetPID.Id, $targetTree.Id)
-$remoteIP = "192.168.225.132"
-$remoteUser = "tempadmin"
-$remotePass = "1234"
+$remoteIP = "REPLACE WITH YOUR REMOTE IP"
+$remoteUser = "REPLACE WITH YOUR USER"
+$remotePass = "REPLACE WITH YOUR PASSWORD"
 
 # --- 0. PART 2: REMOTE SETUP (OPEN MSPAINT) ---
 Write-Host "`nOpening Paint on remote VM ($remoteIP)..." -ForegroundColor Yellow
