@@ -9,21 +9,6 @@ A powerful, from-scratch reimplementation of the Windows **`tasklist`** and **`t
 * 📊 Clean, formatted console output
 
 ---
-## 🎬 Demo
-
-### 🔍 Task Listing (Verbose Mode)
-
-![Tasklist Demo](docs/tasklist_demo.gif)
-
-### 💀 Killing a Process
-
-![Taskkill Demo](docs/taskkill_demo.gif)
-
-### 🌳 Killing a Process Tree
-
-![Process Tree Demo](docs/taskkill_tree.gif)
-
----
 
 ## 🚀 Features
 
